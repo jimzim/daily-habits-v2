@@ -7,7 +7,8 @@ import { CompletionRecord, Habit, lastNDays, todayISO } from '@/lib/types';
 const Swipeable: typeof SwipeableType | null =
   Platform.OS === 'web'
     ? null
-    : (require('react-native-gesture-handler').Swipeable as typeof SwipeableType);
+    : // eslint-disable-next-line @typescript-eslint/no-require-imports -- conditional require keeps gesture-handler out of web bundle
+      (require('react-native-gesture-handler').Swipeable as typeof SwipeableType);
 
 type Props = {
   habit: Habit;
@@ -27,7 +28,6 @@ export function HabitRow({ habit, index, completions, onToggleToday, onDelete }:
     }
     return set;
   }, [completions, habit.id]);
-  const todayDone = completedSet.has(today);
   const swipeRef = useRef<SwipeableType | null>(null);
 
   const renderRightActions = () => (

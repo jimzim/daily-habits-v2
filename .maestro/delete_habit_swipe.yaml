@@ -6,21 +6,29 @@ appId: com.dailyhabits.v2
 - tapOn:
     id: "add-habit-input"
 - inputText: "Test habit"
-- hideKeyboard
+- tapOn: "Daily Habits"
 
 - tapOn:
     id: "add-habit-button"
 
 - assertVisible:
     id: "habit-row-0"
-- assertVisible: "Test habit"
+- assertVisible: "Toggle Test habit for today"
 
 - swipe:
     from:
       id: "habit-row-0"
     direction: LEFT
 
+- extendedWaitUntil:
+    visible:
+      id: "habit-row-0-delete-button"
+    timeout: 5000
+
 - tapOn:
     id: "habit-row-0-delete-button"
 
-- assertNotVisible: "Test habit"
+- extendedWaitUntil:
+    notVisible:
+      id: "habit-row-0"
+    timeout: 5000

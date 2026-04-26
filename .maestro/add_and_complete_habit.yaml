@@ -8,14 +8,14 @@ appId: com.dailyhabits.v2
 - tapOn:
     id: "add-habit-input"
 - inputText: "Drink water"
-- hideKeyboard
+- tapOn: "Daily Habits"
 
 - tapOn:
     id: "add-habit-button"
 
 - assertVisible:
     id: "habit-row-0"
-- assertVisible: "Drink water"
+- assertVisible: "Toggle Drink water for today"
 
 - tapOn:
     id: "habit-row-0"

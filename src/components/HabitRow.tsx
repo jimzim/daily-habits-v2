@@ -10,6 +10,13 @@ const Swipeable: typeof SwipeableType | null =
     : // eslint-disable-next-line @typescript-eslint/no-require-imports -- conditional require keeps gesture-handler out of web bundle
       (require('react-native-gesture-handler').Swipeable as typeof SwipeableType);
 
+const GHTouchable: React.ComponentType<React.ComponentProps<typeof Pressable>> | null =
+  Platform.OS === 'web'
+    ? null
+    : // eslint-disable-next-line @typescript-eslint/no-require-imports -- conditional require keeps gesture-handler out of web bundle
+      (require('react-native-gesture-handler')
+        .TouchableOpacity as React.ComponentType<React.ComponentProps<typeof Pressable>>);
+
 type Props = {
   habit: Habit;
   index: number;
@@ -30,19 +37,21 @@ export function HabitRow({ habit, index, completions, onToggleToday, onDelete }:
   }, [completions, habit.id]);
   const swipeRef = useRef<SwipeableType | null>(null);
 
-  const renderRightActions = () => (
-    <Pressable
-      testID={`habit-row-${index}-delete-button`}
-      accessibilityLabel={`Delete ${habit.name}`}
-      style={({ pressed }) => [styles.deleteAction, pressed && styles.deleteActionPressed]}
-      onPress={() => {
-        swipeRef.current?.close();
-        onDelete(habit.id);
-      }}
-    >
-      <Text style={styles.deleteText}>Delete</Text>
-    </Pressable>
-  );
+  const renderRightActions = () => {
+    const Touchable = GHTouchable ?? Pressable;
+    return (
+      <Touchable
+        testID={`habit-row-${index}-delete-button`}
+        accessibilityLabel={`Delete ${habit.name}`}
+        style={styles.deleteAction}
+        onPress={() => {
+          onDelete(habit.id);
+        }}
+      >
+        <Text style={styles.deleteText}>Delete</Text>
+      </Touchable>
+    );
+  };
 
   const rowContent = (
     <Pressable

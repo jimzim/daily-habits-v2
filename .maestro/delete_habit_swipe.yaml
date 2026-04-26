@@ -1,0 +1,26 @@
+appId: com.dailyhabits.v2
+---
+- launchApp:
+    clearState: true
+
+- tapOn:
+    id: "add-habit-input"
+- inputText: "Test habit"
+- hideKeyboard
+
+- tapOn:
+    id: "add-habit-button"
+
+- assertVisible:
+    id: "habit-row-0"
+- assertVisible: "Test habit"
+
+- swipe:
+    from:
+      id: "habit-row-0"
+    direction: LEFT
+
+- tapOn:
+    id: "habit-row-0-delete-button"
+
+- assertNotVisible: "Test habit"

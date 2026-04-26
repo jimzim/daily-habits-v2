@@ -1,0 +1,10 @@
+appId: com.dailyhabits.v2
+---
+- launchApp:
+    clearState: true
+
+- assertVisible:
+    id: "platform-info-card"
+
+- assertVisible:
+    id: "platform-os"
